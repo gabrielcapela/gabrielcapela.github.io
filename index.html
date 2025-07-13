@@ -321,32 +321,64 @@
 
 
 
-
+					<!-- Formulário com Formspree -->
+					<form id="contact-form" method="POST" action="https://formspree.io/f/mblkrllv">
 					<div class="row">
-						<div class="col-12">
-							<form method="post" action="#">
-								<div class="row">
-									<div class="col-6 col-12-small">
-										<input type="text" name="name" id="name" placeholder="Name" />
-									</div>
-									<div class="col-6 col-12-small">
-										<input type="text" name="email" id="email" placeholder="Email" />
-									</div>
-									<div class="col-12">
-										<input type="text" name="subject" id="subject" placeholder="Subject" />
-									</div>
-									<div class="col-12">
-										<textarea name="message" id="message" placeholder="Message"></textarea>
-									</div>
-									<div class="col-12">
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" /></li>
-											<li><input type="reset" value="Clear Form" class="alt" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
+						<div class="col-6 col-12-small">
+						<input type="text" name="name" id="name" placeholder="Name" required />
 						</div>
+						<div class="col-6 col-12-small">
+						<input type="email" name="email" id="email" placeholder="Email" required />
+						</div>
+						<div class="col-12">
+						<input type="text" name="subject" id="subject" placeholder="Subject" />
+						</div>
+						<div class="col-12">
+						<textarea name="message" id="message" placeholder="Message" required></textarea>
+						</div>
+						<div class="col-12">
+						<ul class="actions">
+							<li><input type="submit" value="Send Message" /></li>
+							<li><input type="reset" value="Clear Form" class="alt" /></li>
+						</ul>
+						</div>
+					</div>
+					</form>
+
+					<!-- Mensagem de sucesso -->
+					<p id="success-message" style="display:none; color: green; margin-top: 1em;">
+					✅ Your message has been sent successfully. Thank you for contacting me!
+					</p>
+
+					<!-- Script para exibir a mensagem -->
+					<script>
+					const form = document.getElementById('contact-form');
+					const successMessage = document.getElementById('success-message');
+
+					form.addEventListener('submit', async (e) => {
+						e.preventDefault();
+						const formData = new FormData(form);
+						
+						try {
+						const response = await fetch(form.action, {
+							method: form.method,
+							body: formData,
+							headers: {
+							'Accept': 'application/json'
+							}
+						});
+
+						if (response.ok) {
+							form.reset();
+							successMessage.style.display = 'block';
+						} else {
+							alert("There was a problem submitting the form. Please try again later.");
+						}
+						} catch (error) {
+						alert("There was a problem submitting the form. Please check your internet connection.");
+						}
+					});
+					</script>
 
 
 
